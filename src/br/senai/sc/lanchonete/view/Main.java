@@ -9,6 +9,10 @@ import br.senai.sc.lanchonete.model.entities.Pedido;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * @author Kenzo Sato
+ * github - Kenzohfs
+ */
 public class Main {
     private static Scanner sc = new Scanner(System.in);
     private static ArrayList<Lanche> listaLanche = new ArrayList<Lanche>();
