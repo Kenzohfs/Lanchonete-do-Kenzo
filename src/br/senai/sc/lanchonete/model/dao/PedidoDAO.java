@@ -1,9 +1,9 @@
 package br.senai.sc.lanchonete.model.dao;
 
-import br.senai.sc.lanchonete.model.entities.Bebida;
-import br.senai.sc.lanchonete.model.entities.Lanche;
-import br.senai.sc.lanchonete.model.entities.Outro;
-import br.senai.sc.lanchonete.model.entities.Pedido;
+import br.senai.sc.lanchonete.model.entities.*;
+import br.senai.sc.lanchonete.model.exceptions.FalhaException;
+import br.senai.sc.lanchonete.model.exceptions.FalhaExecucaoSQLException;
+import br.senai.sc.lanchonete.model.exceptions.FalhaPreparacaoSQLException;
 import br.senai.sc.lanchonete.model.factory.ConexãoFactory;
 import br.senai.sc.lanchonete.model.factory.PedidoFactory;
 
@@ -12,6 +12,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+/**
+ * Classe que faz as operações com o banco de dados
+ */
 public class PedidoDAO {
     private Connection connection;
 
@@ -38,14 +41,13 @@ public class PedidoDAO {
             }
             pstm.setInt(5, pedido instanceof Bebida ? 1 :
                     pedido instanceof Lanche ? 2 : 3);
-            System.out.println(pstm);
             try {
                 pstm.execute();
             } catch (Exception e) {
-                throw new RuntimeException("Erro na execução do comando SQL");
+                throw new FalhaExecucaoSQLException();
             }
         } catch (Exception e) {
-            throw new RuntimeException("Erro na preparação do comando SQL");
+            throw new FalhaPreparacaoSQLException();
         }
     }
 
@@ -70,18 +72,18 @@ public class PedidoDAO {
                 }
                 return pedidos;
             } catch (Exception e) {
-                throw new RuntimeException("Erro na execução do comando SQL");
+                throw new FalhaExecucaoSQLException();
             }
         } catch (Exception e) {
-            throw new RuntimeException("Erro na preparação do comando SQL");
+            throw new FalhaPreparacaoSQLException();
         }
     }
 
 
-    public boolean buscarCodigoPedido(int tipoPedido, int codigoPedido) {
+    public boolean buscarCodigoPedido(TipoPedido tipoPedido, int codigoPedido) {
         String sql = "SELECT * FROM pedido WHERE tipopedido = ? AND codigopedido = ?";
         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
-            pstm.setInt(1, tipoPedido);
+            pstm.setInt(1, tipoPedido.ordinal() + 1);
             pstm.setInt(2, codigoPedido);
             try (ResultSet resultSet = pstm.executeQuery()) {
                 if (resultSet.next()) {
@@ -90,10 +92,10 @@ public class PedidoDAO {
                     return false;
                 }
             } catch (Exception e) {
-                throw new RuntimeException("Erro na execução do comando SQL");
+                throw new FalhaExecucaoSQLException();
             }
         } catch (Exception e) {
-            throw new RuntimeException("Erro na preparação do comando SQL");
+            throw new FalhaPreparacaoSQLException();
         }
     }
 
@@ -109,10 +111,10 @@ public class PedidoDAO {
                     return null;
                 }
             } catch (Exception e) {
-                throw new RuntimeException("Erro na execução do comando SQL");
+                throw new FalhaExecucaoSQLException();
             }
         } catch (Exception e) {
-            throw new RuntimeException("Erro na preparação do comando SQL");
+            throw new FalhaPreparacaoSQLException();
         }
     }
 
@@ -124,10 +126,10 @@ public class PedidoDAO {
             try {
                 pstm.execute();
             } catch (Exception e) {
-                throw new RuntimeException("Erro na execução do comando SQL");
+                throw new FalhaExecucaoSQLException();
             }
         } catch (Exception e) {
-            throw new RuntimeException("Erro na preparação do comando SQL");
+            throw new FalhaPreparacaoSQLException();
         }
     }
 
@@ -140,10 +142,10 @@ public class PedidoDAO {
             try {
                 pstm.execute();
             } catch (Exception e) {
-                throw new RuntimeException("Erro na execução do comando SQL");
+                throw new FalhaExecucaoSQLException();
             }
         } catch (Exception e) {
-            throw new RuntimeException("Erro na preparação do comando SQL");
+            throw new FalhaPreparacaoSQLException();
         }
     }
 
@@ -152,7 +154,7 @@ public class PedidoDAO {
             Pedido pedido = new PedidoFactory().getPedido(resultSet.getInt("codigopedido"), resultSet.getString("descricaopedido"), resultSet.getDouble("precopedido"), resultSet.getDouble("volumebebida"), resultSet.getDouble("pesolanche"), resultSet.getString("tamanhooutro"), resultSet.getString("tipopedido"));
             return pedido;
         } catch (Exception e) {
-            throw new RuntimeException("Erro na extração do objeto");
+            throw new FalhaException("Falha ao extrair objeto");
         }
     }
 

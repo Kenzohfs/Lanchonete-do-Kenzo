@@ -2,6 +2,7 @@ package br.senai.sc.lanchonete.model.service;
 
 import br.senai.sc.lanchonete.model.dao.PedidoDAO;
 import br.senai.sc.lanchonete.model.entities.Pedido;
+import br.senai.sc.lanchonete.model.entities.TipoPedido;
 
 import java.util.ArrayList;
 
@@ -14,7 +15,7 @@ public class PedidoService {
         return new PedidoDAO().listarPedidos(tipo);
     }
 
-    public boolean buscarCodigoPedido(int tipoPedido, int codigoPedido) {
+    public boolean buscarCodigoPedido(TipoPedido tipoPedido, int codigoPedido) {
         return new PedidoDAO().buscarCodigoPedido(tipoPedido, codigoPedido);
     }
 

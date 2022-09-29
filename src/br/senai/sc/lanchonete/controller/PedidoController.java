@@ -1,6 +1,7 @@
 package br.senai.sc.lanchonete.controller;
 
 import br.senai.sc.lanchonete.model.entities.Pedido;
+import br.senai.sc.lanchonete.model.entities.TipoPedido;
 import br.senai.sc.lanchonete.model.service.PedidoService;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class PedidoController {
     }
 
     public boolean buscarCodigoPedido(int tipoPedido, int codigoPedido) {
-        return new PedidoService().buscarCodigoPedido(tipoPedido, codigoPedido);
+        return new PedidoService().buscarCodigoPedido(TipoPedido.values()[tipoPedido - 1], codigoPedido);
     }
 
     public Pedido buscarPedidoPorCodigo(int codigo, int tipoPedido) {

@@ -1,7 +1,7 @@
 package br.senai.sc.lanchonete.model.exceptions;
 
-public class FalhaExecucaoSQL extends RuntimeException{
-    public FalhaExecucaoSQL() {
+public class FalhaExecucaoSQLException extends RuntimeException{
+    public FalhaExecucaoSQLException() {
         super("Erro na execução do comando SQL");
     }
 }

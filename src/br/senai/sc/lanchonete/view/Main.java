@@ -56,7 +56,6 @@ public class Main {
         int confirmacao;
         String tipoPedido = null;
         Pedido pedido = null;
-
         switch (tipo) {
             case 1:
                 pedido = coletaDadosBebida();
@@ -87,7 +86,7 @@ public class Main {
     }
 
     private static Lanche coletaDadosLanche() {
-        Pedido pedido = coletaDadosPedido(1);
+        Pedido pedido = coletaDadosPedido(2);
         System.out.println("Peso: ");
         double peso = sc.nextDouble();
         Lanche lanche = new Lanche(pedido.getDescricaoPedido(), pedido.getCodigo(), pedido.getPrecoPedido(), peso);
@@ -95,7 +94,7 @@ public class Main {
     }
 
     private static Bebida coletaDadosBebida() {
-        Pedido pedido = coletaDadosPedido(2);
+        Pedido pedido = coletaDadosPedido(1);
         System.out.println("Volume: ");
         double volume = sc.nextDouble();
         Bebida bebida = new Bebida();
@@ -184,7 +183,7 @@ public class Main {
         int tipo = sc.nextInt();
         while (tipo > 4 || tipo < 1) {
             System.out.println("Opção inválida!");
-            System.out.println("Selecione: \n1 - Lanche \n2 - Bebida \n3 - Outro");
+            System.out.println("Selecione: \n1 - Bebida \n2 - Lanche \n3 - Outro");
             tipo = sc.nextInt();
         }
         return tipo;
